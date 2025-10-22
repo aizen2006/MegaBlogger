@@ -40,7 +40,17 @@ export default function Post() {
                         src={service.getFilePreview(post.featureImage)}
                         alt={post.title}
                         className="rounded-xl"
+                        onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.nextSibling.style.display = 'flex';
+                        }}
                     />
+                    <div 
+                        className="w-full h-64 bg-gray-200 rounded-xl flex items-center justify-center"
+                        style={{ display: 'none' }}
+                    >
+                        <span className="text-gray-500">Image not available</span>
+                    </div>
 
                     {isAuthor && (
                         <div className="absolute right-6 top-6">
