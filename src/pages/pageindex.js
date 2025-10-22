@@ -1,9 +1,9 @@
 import AddPost from "./Addpost";
-import EditPost from "./Editpost";
+import EditPost from "./EditPost";
 import Home from "./Home";
 import Login from "./Login";
 import SignUp from "./Signup";
-import AllPosts from "./Allposts";
+import AllPosts from "./AllPosts";
 import Post from "./Post";
 
 export {
