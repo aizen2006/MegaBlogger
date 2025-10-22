@@ -6,7 +6,7 @@ import {set, useForm} from 'react-hook-form'
 import {login as authLogin} from '../store/authSlice.js'
 import {Btn, Input, Logo} from './index.js'
 
-function SignUp() {
+export default function SignUp() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {register, handleSubmit} = useForm();
@@ -15,10 +15,10 @@ function SignUp() {
     const create = async(data) => {
         setError('');
         try {
-            const userData = await authService.createAccount(data);
-            if(userData){
-                const userData = await authService.getCurrentUser();
-                if(userData) dispatch(authLogin(userData));
+            const userAccount = await authService.createAccount(data);
+            if(userAccount){
+                const userStatus = await authService.getCurrentUser();
+                if(userStatus) dispatch(authLogin(userStatus));
                 navigate('/');
             }
         } catch (error) {
@@ -70,14 +70,12 @@ function SignUp() {
                         {...register('password', { required: true })}
                     />
                 </div>
-                <Btn
-                type='submit'
-                className='w-full mt-8'
-                >Create Account</Btn>
+                <Btn type='submit' className='w-full mt-8'>
+                    Create Account
+                </Btn>
             </form>
         </div>
     </div>
   )
 }
 
-export default SignUp

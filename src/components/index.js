@@ -5,8 +5,13 @@ import Logo from "./Logo.jsx";
 import Btn from "./Btn.jsx";
 import Input from "./Input.jsx";
 import Login from "./Login.jsx";
-
-
+import RTE from "./RTE.jsx";    
+import PostForm from "./post-form/postForm.jsx";
+import SignUp from "./SignUp.jsx";
+import PostCard from "./PostCard.jsx";
+import Protected from "./AuthLayout.jsx";
+import LogoutBtn from "./header/logoutBtn.jsx";
+import Select from "./Select.jsx";
 export {
     Header,
     Footer,
@@ -14,5 +19,12 @@ export {
     Logo,
     Btn,
     Input,
-    Login
+    Login,
+    RTE,
+    PostForm,
+    SignUp,
+    PostCard,
+    Protected,
+    LogoutBtn,
+    Select,
 };

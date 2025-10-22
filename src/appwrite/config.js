@@ -26,12 +26,12 @@ export class Service{
             console.log("AppwriteServive  :: createPost :: error    ",error);
         }
     }
-    async getPosts(){
+    async getPost(){
         try {
-            const posts = await this.databases.listRows(
+            const posts = await this.databases.listDocuments(
                 conf.databaseId,
                 conf.collectionId,
-                Query.equal( title , slug)
+                [Query.equal("title", title), Query.equal("slug", slug)]
             );
             return posts;
         } catch (error) {
@@ -43,7 +43,7 @@ export class Service{
     async updatePost( slug ,{title, content, featureImage , status  }){
         try {
             if(slug){
-                return await this.databases.updateRow(
+                return await this.databases.updateDocument(
                 conf.databaseId,
                 conf.collectionId,
                 slug,
@@ -59,7 +59,7 @@ export class Service{
     async deletePost( slug ){
         try {
             if(slug){
-                await this.databases.deleteRow(
+                await this.databases.deleteDocument(
                     conf.databaseId,
                     conf.collectionId,
                     slug
@@ -75,7 +75,7 @@ export class Service{
     }
     async getPosts(query= [Query.equal("status", "active")] ){
         try {
-            const posts = await this.databases.listRows(
+            const posts = await this.databases.listDocuments(
                 conf.databaseId,
                 conf.collectionId,
                 ...query
@@ -88,7 +88,7 @@ export class Service{
     /// File upload services
     async uploadFile(file) {
         try {
-            const response = await this.bucket.uploadFile(
+            const response = await this.bucket.createFile(
                 conf.bucketId,
                 ID.unique(),
                 file,
