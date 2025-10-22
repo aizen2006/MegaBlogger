@@ -6,23 +6,24 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 export default function PostForm({ post }) {
-    const navigate = useNavigate();
+    
     const { register, handleSubmit, setValue, watch, control , getValues     } = useForm({
         defaultValues: {
             title: post?.title || '',
             content: post?.content || '',
-            slug: post?.slug || '',
-            status: post?.status || 'draft',
+            slug: post?.$id || '',
+            status: post?.status || 'active',
         }
     });
 
     const [error, setError] = useState('');
-    const userData = useSelector((state) => state.user.userData);
+    const navigate = useNavigate();
+    const userData = useSelector((state) => state.auth.userData);
 
     const onSubmit = async (data) => {
         setError('');
         if (post){
-            data.image[0] ?  await service.uploadFile(data.image[0]) : null;
+            const file = data.image[0] ?  await service.uploadFile(data.image[0]) : null;
             if(file){
                 await service.deleteFile(post.featureImage);
             }
@@ -37,6 +38,7 @@ export default function PostForm({ post }) {
             if(file){
                 const fileId = file.$id;
                 const dbpost = await service.createPost({...data , featureImage: fileId , userId: userData.$id }); 
+
                 if (dbpost) {
                     navigate(`/post/${dbpost.$id}`);
                 }
@@ -47,13 +49,13 @@ export default function PostForm({ post }) {
     const slugTransform = useCallback((value) =>{
         if (value && typeof(value) === 'string'){
             return value
-            .trim()
-            .toLowerCase()
-            .replace(/^[a-zA-Z\d\s]+/g, '-')
-            .replace(/\s/g, '-');
-        return ''
+                .trim()
+                .toLowerCase()
+                .replace(/ /g, '-');
+        }else{
+            return '';
         }
-    }, [setValue]);
+    }, []);
 
     React.useEffect(() => {
         const subscription = watch((value, { name}) => {
@@ -68,7 +70,7 @@ export default function PostForm({ post }) {
     }, [slugTransform, watch, setValue]);
 
     return (
-        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-wrap">
             <div className="w-2/3 px-2">
                 <Input
                     label="Title :"
@@ -110,7 +112,7 @@ export default function PostForm({ post }) {
                     className="mb-4"
                     {...register("status", { required: true })}
                 />
-                <Btn type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full">
+                <Btn type="submit" bgColor={post ? "bg-green-500" : undefined} onClick={onSubmit} className="w-full">
                     {post ? "Update" : "Submit"}
                 </Btn>
             </div>

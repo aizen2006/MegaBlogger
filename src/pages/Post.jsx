@@ -15,7 +15,7 @@ export default function Post() {
     const isAuthor = post && userData ? post.userId === userData.$id : false;
 
     useEffect(() => {
-        if (slug) {
+        if (slug) { 
             service.getPost(slug).then((post) => {
                 if (post) setPost(post);
                 else navigate("/");
@@ -26,7 +26,7 @@ export default function Post() {
     const deletePost = () => {
         service.deletePost(post.$id).then((status) => {
             if (status) {
-                service.deleteFile(post.featuredImage);
+                service.deleteFile(post.featureImage);
                 navigate("/");
             }
         });
@@ -37,7 +37,7 @@ export default function Post() {
             <Container>
                 <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
                     <img
-                        src={service.getFilePreview(post.featuredImage)}
+                        src={service.getFilePreview(post.featureImage)}
                         alt={post.title}
                         className="rounded-xl"
                     />
@@ -63,5 +63,13 @@ export default function Post() {
                     </div>
             </Container>
         </div>
-    ) : null;
+    ) : (
+        <div className="py-8">
+            <Container>
+                <div className="text-center">
+                    <h1 className="text-2xl font-bold">Loading...</h1>
+                </div>
+            </Container>
+        </div>
+    );
 }

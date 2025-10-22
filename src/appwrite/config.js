@@ -16,26 +16,28 @@ export class Service{
 
     async createPost({title, slug , content, featureImage , status , userId }){
         try {
-            const post = await this.databases.createRow(
+            return  await this.databases.createDocument(
                 conf.databaseId,
                 conf.collectionId,
                 slug,
                 {title , content, featureImage , status , userId }
-            );
+            )
         }catch (error) {
             console.log("AppwriteServive  :: createPost :: error    ",error);
+            throw error;
         }
     }
     async getPost(){
         try {
-            const posts = await this.databases.listDocuments(
+            const posts = await this.databases.getDocument(
                 conf.databaseId,
                 conf.collectionId,
-                [Query.equal("title", title), Query.equal("slug", slug)]
+                slug
             );
             return posts;
         } catch (error) {
-            
+            console.log("AppwriteService  :: getPost :: error    ",error);
+            throw error;
         }
 
     }
@@ -54,6 +56,7 @@ export class Service{
             }
         } catch (error) {
             console.log("AppwriteService  :: updatePost :: error    ",error);
+            throw error;
         }
     }
     async deletePost( slug ){
@@ -71,6 +74,7 @@ export class Service{
             }
         } catch (error) {
             console.log("AppwriteService  :: deletePost :: error    ",error);
+            throw error;
         }
     }
     async getPosts(query= [Query.equal("status", "active")] ){
@@ -78,24 +82,25 @@ export class Service{
             const posts = await this.databases.listDocuments(
                 conf.databaseId,
                 conf.collectionId,
-                ...query
+                query
             );
             return posts;
         } catch (error) {
             console.log("AppwriteService  :: getPosts :: error    ",error);
+            throw error;
         }
     }
     /// File upload services
     async uploadFile(file) {
         try {
-            const response = await this.bucket.createFile(
+            return await this.bucket.createFile(
                 conf.bucketId,
                 ID.unique(),
                 file,
             );
-            return response;
         } catch (error) {
             console.log("AppwriteService  :: uploadFile :: error    ", error);
+            throw error;
         }
     }
 
@@ -107,19 +112,14 @@ export class Service{
             return true;
         } catch (error) {
             console.log("AppwriteService  :: deleteFile :: error    ", error);
-            return false;
+            throw error;
         }
     }
     getFilePreview(fileId) {
-        try {
-            const response = this.bucket.getFilePreview(
-                conf.bucketId,
-                fileId,
-            );
-            return response;
-        } catch (error) {
-            console.log("AppwriteService  :: getFilePreview :: error    ", error);
-        }
+        return this.bucket.getFilePreview(
+            conf.bucketId,
+            fileId
+        )
         }
 }
 

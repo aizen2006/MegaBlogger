@@ -4,15 +4,34 @@ import {Container, PostCard} from '../components'
 
 function Home() {
     const [posts, setPosts] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         service.getPosts().then((posts) => {
-            if (posts) {
+            if (posts && posts.documents) {
                 setPosts(posts.documents)
             }
+        }).catch((error) => {
+            console.error('Error fetching posts:', error);
+        }).finally(() => {
+            setLoading(false);
         })
     }, [])
-    
+    if (loading) {
+        return (
+            <div className="w-full py-8 mt-4 text-center">
+                <Container>
+                    <div className="flex flex-wrap">
+                        <div className="p-2 w-full">
+                            <h1 className="text-2xl font-bold hover:text-gray-500">
+                                Loading...
+                            </h1>
+                        </div>
+                    </div>
+                </Container>
+            </div>
+        )
+    }
     if (posts.length === 0) {
         return (
             <div className="w-full py-8 mt-4 text-center">

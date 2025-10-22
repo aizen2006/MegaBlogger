@@ -4,8 +4,11 @@ import { Container, PostCard } from '../components/index.js'
 function AllPosts() {
     const [posts, setPosts] = React.useState([]);
     useEffect(() => {
-        service.getPosts([]).then((res) => {
-            setPosts(res.documents);
+        // Don't pass an empty array, let it use the default query
+        service.getPosts().then((res) => {
+            if (res && res.documents) {
+                setPosts(res.documents);
+            }
         }).catch((err) => {
             console.log(err);
         });
@@ -16,7 +19,7 @@ function AllPosts() {
             <div className='flex flex-wrap'>
                 {posts.map((post) => (
                     <div key={post.$id} className='p-2 w-1/4'>
-                        <PostCard post={post} />
+                        <PostCard {...post} />
                     </div>
                 ))}
             </div>
