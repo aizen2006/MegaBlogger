@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import service from "../appwrite/config";
-import { Btn, Container } from "../components";
+import service from "../appwrite/config.js";
+import Btn from "../components/Btn.jsx";
+import Container from "../components/container/container.jsx";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 

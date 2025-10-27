@@ -1,5 +1,5 @@
 import React from 'react'
-import {SignUp as SignUpComponent} from '../components/index.js'
+import SignUpComponent from '../components/SignUp.jsx'
 
 
 export default function SignUp() {

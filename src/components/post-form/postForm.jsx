@@ -1,6 +1,9 @@
 import React, { useCallback, useState } from 'react';
 import {useForm} from 'react-hook-form';
-import { Btn, Input, Select , RTE } from '../index.js';
+import Btn from '../Btn.jsx';
+import Input from '../Input.jsx';
+import Select from '../Select.jsx';
+import RTE from '../RTE.jsx';
 import service from '../../appwrite/config.js';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
