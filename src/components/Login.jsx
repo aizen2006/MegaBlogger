@@ -27,28 +27,47 @@ function Login() {
         }
     }
     return(
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <div className='mx-auto  w-full max-w-lg bg-grey-100 rounded-xl p-10 border border-black/10'>
+        <div className="min-h-screen flex items-center justify-center py-12 px-4">
+            <div 
+                className='mx-auto w-full max-w-lg rounded-2xl p-10 shadow-2xl'
+                style={{ 
+                    backgroundColor: '#FFFFFF',
+                    border: '3px solid #FADDA3'
+                }}
+            >
                 <div className='mb-8 text-center'>
                     <span className='inline-block w-full max-w-[100px]'>
                         <Logo width='100%' />
                     </span>
                 </div>
-                <h1 className='text-2xl font-bold leading-tight text-center'>SignIn to your Account</h1>
-                <p className='mt-2 text-center text-base text-black/60'>
+                <h1 
+                    className='text-3xl font-bold leading-tight text-center mb-2'
+                    style={{ color: '#FA9A91' }}
+                >
+                    Sign In to Your Account
+                </h1>
+                <p className='mt-2 text-center text-base' style={{ color: '#4A4A4A' }}>
                     Don&apos;t have an account?&nbsp;
                     <Link 
-                    to='/signup'
-                    className='font-medium text-primary transition-all duratio-200 hover:underline'
+                        to='/signup'
+                        className='font-semibold transition-all duration-200 hover:underline'
+                        style={{ color: '#B8A9CA' }}
                     >
-                        SignUp
+                        Sign Up
                     </Link>
-
                 </p>
-                {error && <p className='mt-8  text-red-600 text-center'>{error}</p>}
+                {error && (
+                    <p 
+                        className='mt-6 p-4 rounded-lg text-center font-medium'
+                        style={{ backgroundColor: '#FFE5E5', color: '#D32F2F' }}
+                    >
+                        {error}
+                    </p>
+                )}
                 <form
-                onSubmit={handleSubmit(login)}
-                className='mt-8 space-y-6'>
+                    onSubmit={handleSubmit(login)}
+                    className='mt-8 space-y-6'
+                >
                     <div className='space-y-5'>
                         <Input
                             label='Email: '

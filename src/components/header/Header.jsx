@@ -18,21 +18,33 @@ function Header() {
   ];
 
   return (
-    <header className='py-3 shadow bg-gray-500'>
+    <header 
+      className='py-4 shadow-lg fixed top-0 left-0 right-0 z-50 backdrop-blur-sm' 
+      style={{ 
+        background: 'linear-gradient(135deg, #FA9A91 0%, #B8A9CA 100%)',
+        boxShadow: '0 4px 6px -1px rgba(250, 154, 145, 0.2)'
+      }}
+    >
       <Container>
-        <nav className='flex'>
+        <nav className='flex items-center'>
           <div className='mr-4'>
             <Link to='/'>
-              <Logo width='120px' />
+              <Logo width='48px' />
             </Link>
           </div>
-          <ul className='flex ml-auto'>
-            {navItems.map((item, ) => 
+          <ul className='flex ml-auto items-center gap-2'>
+            {navItems.map((item) => 
               item.active ? (
-               <li key={item.name} className='ml-6'>
-                <button onClick={() => navigate(item.slug)}
-                  className='inline-block px-4 py-2 duration-200 hover:bg-blue-100 rounded-full'
-                  >{item.name}</button>
+               <li key={item.name}>
+                <button 
+                  onClick={() => navigate(item.slug)}
+                  className='inline-block px-6 py-2 duration-200 rounded-full font-medium text-white hover:scale-105 transition-all'
+                  style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+                  onMouseEnter={(e) => e.target.style.backgroundColor = '#FADDA3'}
+                  onMouseLeave={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.2)'}
+                >
+                  {item.name}
+                </button>
                </li>
               ) : null
             )}

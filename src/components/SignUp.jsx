@@ -27,32 +27,50 @@ export default function SignUp() {
     }
 
   return (
-    <div className='flex items-center justify-center'>
-        <div className={`mx-auto w-full max-w-lg bg-grey-100 rounded-xl p-10 border border-black/10 `}>
-            <div className='mb-2 flex justify-center text-center'>
+    <div className='flex items-center justify-center min-h-screen py-12 px-4'>
+        <div 
+            className='mx-auto w-full max-w-lg rounded-2xl p-10 shadow-2xl'
+            style={{ 
+                backgroundColor: '#FFFFFF',
+                border: '3px solid #B8A9CA'
+            }}
+        >
+            <div className='mb-8 flex justify-center text-center'>
                 <span className='inline-block w-full max-w-[100px]'>
                     <Logo width='100%' />
                 </span>
             </div>
-            <h2 className='text-center text-2xl font-bold leading-tight'>Sign up to create your account</h2>
-            <p className='mt-2 text-center text-base text-black/60  '>
+            <h2 
+                className='text-center text-3xl font-bold leading-tight mb-2'
+                style={{ color: '#FA9A91' }}
+            >
+                Create Your Account
+            </h2>
+            <p className='mt-2 text-center text-base' style={{ color: '#4A4A4A' }}>
                 Already have an account?&nbsp;
                 <Link 
-                to='/login'
-                className='font-semibold text-blue-500 hover:text-blue-700'
+                    to='/login'
+                    className='font-semibold transition-all duration-200 hover:underline'
+                    style={{ color: '#B8A9CA' }}
                 >
-                    Log in
+                    Log In
                 </Link>
             </p>
-            {error && <p className='mt-8 text-red-600 text-center'>{error}</p>}
-            <form action="" onSubmit={handleSubmit(create)}>
+            {error && (
+                <p 
+                    className='mt-6 p-4 rounded-lg text-center font-medium'
+                    style={{ backgroundColor: '#FFE5E5', color: '#D32F2F' }}
+                >
+                    {error}
+                </p>
+            )}
+            <form onSubmit={handleSubmit(create)} className='mt-8'>
                 <div className='space-y-5'>
                     <Input
-                        label='FullName: '
+                        label='Full Name: '
                         placeholder='Enter your Full name'
                         {...register('name', { required: true })}
                     />
-
                 </div>
                 <div className='space-y-5'>
                     <Input
@@ -62,7 +80,7 @@ export default function SignUp() {
                         {...register('email', { required: true , validate:{ matchpattern : (value) => /^([\w\.\-_]+)?\w+@[\w-_]+(\.\w+){1,}$/.test(value) || "Email address must be a Valid address" }})}
                     />
                 </div>
-                <div>
+                <div className='space-y-5'>
                     <Input
                         label='Password: '
                         type='password'

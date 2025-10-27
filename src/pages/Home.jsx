@@ -21,9 +21,9 @@ function Home() {
         return (
             <div className="w-full py-8 mt-4 text-center">
                 <Container>
-                    <div className="flex flex-wrap">
-                        <div className="p-2 w-full">
-                            <h1 className="text-2xl font-bold hover:text-gray-500">
+                    <div className="flex justify-center">
+                        <div className="p-8 rounded-2xl" style={{ backgroundColor: '#FFFFFF', border: '2px solid #FADDA3' }}>
+                            <h1 className="text-3xl font-bold" style={{ color: '#FA9A91' }}>
                                 Loading...
                             </h1>
                         </div>
@@ -36,11 +36,12 @@ function Home() {
         return (
             <div className="w-full py-8 mt-4 text-center">
                 <Container>
-                    <div className="flex flex-wrap">
-                        <div className="p-2 w-full">
-                            <h1 className="text-2xl font-bold hover:text-gray-500">
-                                Login to read posts
+                    <div className="flex justify-center">
+                        <div className="p-8 rounded-2xl" style={{ backgroundColor: '#FFFFFF', border: '2px solid #B8A9CA' }}>
+                            <h1 className="text-3xl font-bold mb-4" style={{ color: '#FA9A91' }}>
+                                Welcome to MegaBlogger
                             </h1>
+                            <p style={{ color: '#4A4A4A' }}>Login to read and create amazing posts</p>
                         </div>
                     </div>
                 </Container>
@@ -48,11 +49,11 @@ function Home() {
         )
     }
     return (
-        <div className='w-full py-8'>
+        <div className='w-full py-8 px-4'>
             <Container>
-                <div className='flex flex-wrap'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
                     {posts.map((post) => (
-                        <div key={post.$id} className='p-2 w-1/4'>
+                        <div key={post.$id}>
                             <PostCard {...post} />
                         </div>
                     ))}

@@ -27,7 +27,7 @@ export class Service{
             throw error;
         }
     }
-    async getPost(){
+    async getPost(slug){
         try {
             const posts = await this.databases.getDocument(
                 conf.databaseId,
@@ -116,13 +116,29 @@ export class Service{
         }
     }
     getFilePreview(fileId) {
+        if(!fileId) {
+            console.log("AppwriteService :: getFilePreview :: fileId is required");
+            return null;
+        }
+        
+        if(!conf.bucketId) {
+            console.error("AppwriteService :: getFilePreview :: bucketId is not configured");
+            return null;
+        }
+        
         try {
-            return this.bucket.getFilePreview(
+            // Use getFileView instead of getFilePreview
+            const url = this.bucket.getFileView(
                 conf.bucketId,
                 fileId
             );
+            
+            const urlString = url.href || url.toString();
+            console.log("Generated file view URL:", urlString);
+            
+            return urlString;
         } catch (error) {
-            console.log("AppwriteService :: getFilePreview :: error", error);
+            console.error("AppwriteService :: getFileView :: error", error);
             return null;
         }
     }

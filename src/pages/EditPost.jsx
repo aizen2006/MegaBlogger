@@ -20,9 +20,20 @@ function EditPost() {
         }
     }, [slug, navigate])
   return post ? (
-    <div className='py-8'>
+    <div className='py-8 px-4'>
         <Container>
-            <PostForm post={post} />
+            <h1 className='text-4xl font-bold mb-8 text-center' style={{ color: '#FA9A91' }}>
+                Edit Post
+            </h1>
+            <div 
+                className='rounded-2xl p-8 shadow-lg'
+                style={{ 
+                    backgroundColor: '#FFFFFF',
+                    border: '2px solid #B8A9CA'
+                }}
+            >
+                <PostForm post={post} />
+            </div>
         </Container>
     </div>
   ) : null

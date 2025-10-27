@@ -41,23 +41,14 @@ function App() {
   }
   
   return !loading ? (
-    <div className='min-h-screen flex flex-wrap content-between bg-grey-400 '>
-      <div className='w-full block'>
-        <Header />
-        <div style={{ textAlign: 'center', marginTop: '100px' }}>
-          
-        </div>
-        <main>
-          <Outlet />
-        </main>
-        <Footer />
-      </div>
+    <div className='min-h-screen flex flex-col' style={{ backgroundColor: '#FDF0DA', color: '#4A4A4A' }}>
+      <Header />
+      <main className='flex-1 pt-20'>
+        <Outlet />
+      </main>
+      <Footer />
     </div>
-  ) : (
-    <div className='min-h-screen flex items-center justify-center'>
-      <div className='text-xl'>Loading...</div>
-    </div>
-  )
+  ) : null;
 }
 
 export default App

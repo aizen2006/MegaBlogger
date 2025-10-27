@@ -33,51 +33,63 @@ export default function Post() {
     };
 
     return post ? (
-        <div className="py-8">
+        <div className="py-8 px-4">
             <Container>
-                <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
+                <div 
+                    className="w-full flex justify-center mb-6 relative rounded-2xl p-4 border-2"
+                    style={{ borderColor: '#FADDA3', backgroundColor: '#FFFFFF' }}
+                >
                     <img
                         src={service.getFilePreview(post.featureImage)}
                         alt={post.title}
-                        className="rounded-xl"
+                        className="rounded-xl max-w-full"
                         onError={(e) => {
                             e.target.style.display = 'none';
                             e.target.nextSibling.style.display = 'flex';
                         }}
                     />
                     <div 
-                        className="w-full h-64 bg-gray-200 rounded-xl flex items-center justify-center"
-                        style={{ display: 'none' }}
+                        className="w-full h-64 rounded-xl flex items-center justify-center"
+                        style={{ display: 'none', backgroundColor: '#FDF0DA' }}
                     >
-                        <span className="text-gray-500">Image not available</span>
+                        <span style={{ color: '#4A4A4A' }}>Image not available</span>
                     </div>
 
                     {isAuthor && (
-                        <div className="absolute right-6 top-6">
+                        <div className="absolute right-6 top-6 flex gap-2">
                             <Link to={`/edit-post/${post.$id}`}>
-                                <Btn bgColor="bg-green-500" className="mr-3">
+                                <Btn bgColor="#B3E0C6" className="mr-3">
                                     Edit
                                 </Btn>
                             </Link>
-                            <Btn bgColor="bg-red-500" onClick={deletePost}>
+                            <Btn bgColor="#FF6B6B" onClick={deletePost}>
                                 Delete
                             </Btn>
                         </div>
                     )}
                 </div>
                 <div className="w-full mb-6">
-                    <h1 className="text-2xl font-bold">{post.title}</h1>
+                    <h1 className="text-4xl font-bold" style={{ color: '#FA9A91' }}>{post.title}</h1>
                 </div>
-                <div className="browser-css">
+                <div 
+                    className="browser-css prose max-w-none p-6 rounded-2xl"
+                    style={{ 
+                        backgroundColor: '#FFFFFF',
+                        border: '2px solid #B8A9CA',
+                        color: '#4A4A4A'
+                    }}
+                >
                     {parse(post.content)}
-                    </div>
+                </div>
             </Container>
         </div>
     ) : (
         <div className="py-8">
             <Container>
                 <div className="text-center">
-                    <h1 className="text-2xl font-bold">Loading...</h1>
+                    <div className="p-8 rounded-2xl inline-block" style={{ backgroundColor: '#FFFFFF', border: '2px solid #FADDA3' }}>
+                        <h1 className="text-3xl font-bold" style={{ color: '#FA9A91' }}>Loading...</h1>
+                    </div>
                 </div>
             </Container>
         </div>
