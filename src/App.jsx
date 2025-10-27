@@ -5,23 +5,12 @@ import authService from './appwrite/auth.js'
 import {Header , Footer} from './components/index.js'
 import {Outlet} from 'react-router-dom'
 import {login , logout} from './store/authSlice.js'
-import {pingAppwrite } from './appwrite/ping.js';
 
 
 function App() {
   const [loading , setLoading] = useState(true)
   const [envError, setEnvError] = useState(null)
   const dispatch = useDispatch()
-
-  // Ping to check Appwrite connection
-  const handlePing = async () => {
-    const result = await pingAppwrite();
-    if (result.success) {
-      alert('✅ ' + result.message);
-    } else {
-      alert('❌ ' + result.message);
-    }
-  };
 
   useEffect(() => {
     // Check if environment variables are properly set
@@ -56,8 +45,7 @@ function App() {
       <div className='w-full block'>
         <Header />
         <div style={{ textAlign: 'center', marginTop: '100px' }}>
-          <h2>Appwrite Connection Test</h2>
-          <button onClick={handlePing}>Send a Ping</button>
+          
         </div>
         <main>
           <Outlet />
