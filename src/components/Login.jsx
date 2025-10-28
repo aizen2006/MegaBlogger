@@ -6,7 +6,7 @@ import Input from './Input.jsx'
 import Logo from './Logo.jsx'
 import {useDispatch} from 'react-redux'
 import authService from '../appwrite/auth.js'
-import {set, useForm} from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 
 function Login() {
@@ -17,12 +17,19 @@ function Login() {
     const login = async(data) => {
         setError('');
         try {
-            const session = await authService.login(data)
+            // If a session already exists, use it
+            const existing = await authService.getCurrentUser();
+            if (existing) {
+                dispatch(authLogin(existing));
+                navigate('/');
+                return;
+            }
+
+            const session = await authService.login(data);
             if (session) {
-                const userData = await authService.getCurrentUser(data)
+                const userData = await authService.getCurrentUser();
                 if (userData) dispatch(authLogin(userData));
                 navigate('/');
-
             }
         } catch (error) {
             setError(error.message);

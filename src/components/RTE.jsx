@@ -3,6 +3,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import { Controller } from 'react-hook-form';
 
 export default function RTE({name, control,label , defaultValue=''}) {
+  const tinymceApiKey = import.meta.env.VITE_TINYMCE_API_ID || '';
   return (
     // correct way to do this
     <div className='w-full'>
@@ -10,10 +11,10 @@ export default function RTE({name, control,label , defaultValue=''}) {
         <Controller
         name={name || "content"}
         control={control}
-        render={({field:{onChange}}) => (
+        defaultValue={defaultValue}
+        render={({field}) => (
             <Editor
-            apiKey='zud8nxjpqml4cru6eqxt7t8el0luzbqip0dywwyk4qujpv8f'
-            initialValue={defaultValue}
+            apiKey={tinymceApiKey}
             init={{
                 height: 500,
                 menubar: false,
@@ -31,7 +32,9 @@ export default function RTE({name, control,label , defaultValue=''}) {
                 ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
                 uploadcare_public_key: '6f72e49dd2f30ee45f42',
             }} 
-            onEditorChange={onChange}
+            value={field.value}
+            onEditorChange={field.onChange}
+            onBlur={field.onBlur}
             />
         )}
 

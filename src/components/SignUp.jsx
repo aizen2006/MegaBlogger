@@ -2,7 +2,7 @@ import React , {useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import authService from '../appwrite/auth.js'
 import {useDispatch} from 'react-redux'
-import {set, useForm} from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import {login as authLogin} from '../store/authSlice.js'
 import Btn from './Btn.jsx'
 import Input from './Input.jsx'
@@ -19,7 +19,12 @@ export default function SignUp() {
         try {
             const userAccount = await authService.createAccount(data);
             if(userAccount){
-                const userStatus = await authService.getCurrentUser();
+                // Prefer existing session if present, else login
+                let userStatus = await authService.getCurrentUser();
+                if (!userStatus) {
+                    await authService.login({ email: data.email, password: data.password });
+                    userStatus = await authService.getCurrentUser();
+                }
                 if(userStatus) dispatch(authLogin(userStatus));
                 navigate('/');
             }

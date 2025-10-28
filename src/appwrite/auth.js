@@ -27,6 +27,26 @@ export class AuthService {
                 const userLogin = await this.account.createEmailPasswordSession(email,password)
                 return userLogin;
         } catch (error) {
+            // Handle existing session edge-case
+            const message = (error && (error.message || error.toString())) || '';
+            const code = error && (error.code || error.status || error.responseCode);
+            const isActiveSession = code === 409 || /session is active/i.test(message);
+            if (isActiveSession) {
+                try {
+                    // If a session is already valid, return current user as success signal
+                    const existing = await this.account.get();
+                    return existing;
+                } catch (_) {
+                    // Clear stale sessions and retry once
+                    try {
+                        await this.account.deleteSessions();
+                        const retry = await this.account.createEmailPasswordSession(email, password);
+                        return retry;
+                    } catch (e) {
+                        throw e;
+                    }
+                }
+            }
             throw error;
         }
     }
@@ -44,7 +64,11 @@ export class AuthService {
             const Status = await this.account.get()
             return Status
         } catch (error) {
-            throw error;
+            const code = error && (error.code || error.status || error.responseCode);
+            if (code === 401 || code === 403) {
+                return null;
+            }
+            return null;
         }
         
     }
