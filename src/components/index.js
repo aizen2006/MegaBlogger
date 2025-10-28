@@ -1,5 +1,5 @@
-import Header from "./header/header.jsx";
-import Footer from './footer/footer.jsx';
+import Header from "./header/Header.jsx";
+import Footer from './footer/Footer.jsx';
 import Container from "./container/container.jsx";
 import Logo from "./Logo.jsx";
 import Btn from "./Btn.jsx";
